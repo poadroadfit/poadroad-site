@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function SuccessPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-sky-50 to-white px-6">
@@ -24,9 +26,9 @@ export default function SuccessPage() {
             Email Gabe
           </a>
 
-          <a href="/" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
+          <Link href="/" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
             Back to homepage →
-          </a>
+          </Link>
         </div>
       </div>
     </main>

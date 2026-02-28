@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CanceledPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-sky-50 to-white px-6">
@@ -7,12 +9,12 @@ export default function CanceledPage() {
           No worries — your card was not charged.
         </p>
         <div className="mt-6 flex flex-col gap-3">
-          <a
+          <Link
             href="/"
             className="rounded-2xl px-6 py-4 font-semibold bg-sky-600 text-white hover:bg-sky-700 transition"
           >
             Try booking again
-          </a>
+          </Link>
           <a
             href="mailto:poadroadfit@gmail.com?subject=Waitlist%20or%20Booking%20Help"
             className="rounded-2xl px-6 py-4 font-semibold border-2 border-slate-900 text-slate-900 hover:bg-slate-50 transition"

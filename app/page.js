@@ -4,17 +4,32 @@ import { useMemo, useState } from "react";
 
 export default function Page() {
   const handleCheckout = async (type) => {
-  const res = await fetch("/api/checkout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ type }),
-  });
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type }),
+      });
 
-  const data = await res.json();
-  window.location.href = data.url;
-};
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        alert(data?.error || "Unable to start checkout. Please try again.");
+        return;
+      }
+
+      if (!data?.url) {
+        alert("Checkout URL was not returned. Please try again.");
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch {
+      alert("Network error while starting checkout. Please try again.");
+    }
+  };
 
   const maxSpots = 10;
   const [spotsTaken, setSpotsTaken] = useState(0);
@@ -113,12 +128,13 @@ export default function Page() {
     Extended Stay Pack (6) — $150
   </button>
 
-  <a href="mailto:poadroadfit@gmail.com">
-    <button className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50">
-      Email Us
-    </button>
-  </a>
-</div>
+              <a
+                href="mailto:poadroadfit@gmail.com"
+                className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
+              >
+                Email Us
+              </a>
+            </div>
 
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
@@ -162,10 +178,11 @@ export default function Page() {
                     Reserve Spot
                   </button>
                 ) : (
-                  <a href="mailto:poadroadfit@gmail.com?subject=Waitlist Request - PoadRoad Beach Workout">
-                    <button className="rounded-2xl px-5 py-3 font-semibold border-2 border-slate-900 text-slate-900 hover:bg-slate-50 transition">
-                      Class Full — Join Waitlist
-                    </button>
+                  <a
+                    href="mailto:poadroadfit@gmail.com?subject=Waitlist Request - PoadRoad Beach Workout"
+                    className="rounded-2xl px-5 py-3 font-semibold border-2 border-slate-900 text-slate-900 hover:bg-slate-50 transition"
+                  >
+                    Class Full — Join Waitlist
                   </a>
                 )}
               </div>
@@ -234,10 +251,11 @@ export default function Page() {
             </ul>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="mailto:poadroadfit@gmail.com?subject=Online Coaching - PoadRoad">
-                <button className="rounded-2xl px-6 py-4 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition">
-                  Apply for Online Coaching
-                </button>
+              <a
+                href="mailto:poadroadfit@gmail.com?subject=Online Coaching - PoadRoad"
+                className="rounded-2xl px-6 py-4 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
+              >
+                Apply for Online Coaching
               </a>
               <p className="text-sm text-slate-500 self-center">
                 (In Step 5 this becomes an automated recurring membership.)
