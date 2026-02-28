@@ -3,12 +3,18 @@
 import { useMemo, useState } from "react";
 
 export default function Page() {
-  const handleCheckout = async () => {
-    const res = await fetch("/api/checkout", { method: "POST" });
-    const data = await res.json();
-    if (data?.url) window.location.href = data.url;
-    else alert("Checkout error — missing url");
-  };
+  const handleCheckout = async (type) => {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ type }),
+  });
+
+  const data = await res.json();
+  window.location.href = data.url;
+};
 
   const maxSpots = 10;
   const [spotsTaken, setSpotsTaken] = useState(0);
@@ -81,22 +87,38 @@ export default function Page() {
                 No equipment needed
               </span>
               <span className="rounded-full bg-white border border-slate-200 px-3 py-1">
-                Tourists welcome
+                Visitors welcome
               </span>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <button
-  onClick={handleCheckout}
-  className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold bg-sky-600 text-white hover:bg-sky-700 transition shadow-sm"
->
-  Book Your Spot — $30
-</button>
-              <a href="mailto:poadroadfit@gmail.com">
-                <button className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border-2 border-sky-600 text-sky-800 hover:bg-sky-50 transition">
-                  Email Us
-                </button>
-              </a>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+  <button
+    onClick={() => handleCheckout("dropin")}
+    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold bg-sky-600 text-white hover:bg-sky-700"
+  >
+    Drop-In — $30
+  </button>
+
+  <button
+    onClick={() => handleCheckout("pack3")}
+    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
+  >
+    Visitor Pack (3) — $81
+  </button>
+
+  <button
+    onClick={() => handleCheckout("pack6")}
+    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
+  >
+    Extended Stay Pack (6) — $150
+  </button>
+
+  <a href="mailto:poadroadfit@gmail.com">
+    <button className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50">
+      Email Us
+    </button>
+  </a>
+</div>
 
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
@@ -152,7 +174,6 @@ export default function Page() {
               </p>
             </div>
           </div>
-        </div>
       </header>
 
       {/* What to expect */}
