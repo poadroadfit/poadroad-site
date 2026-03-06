@@ -73,6 +73,18 @@ export default function Page() {
         </div>
       </div>
 
+      <div className="border-b border-slate-200 bg-white/60">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2">
+          <div className="h-12 sm:h-14 w-full rounded-2xl border border-slate-200/70 bg-sky-50/60 overflow-hidden">
+            <img
+              src="/PoadRoad-2.png"
+              alt="PoadRoad banner"
+              className="h-full w-full object-cover opacity-25"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Hero */}
       <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
@@ -87,7 +99,7 @@ export default function Page() {
             </h1>
 
             <p className="mt-4 text-lg text-slate-700 max-w-xl">
-              Outdoor beach conditioning built for visitors and locals, with scalable coaching for every fitness level.
+              Outdoor beach workouts for both visitors and locals. Designed to be fun, challenging, and open to all fitness levels.
             </p>
             <p className="mt-2 text-base font-medium text-slate-800">
               Perfect for visitors who want to stay active while in Honolulu.
@@ -209,6 +221,9 @@ export default function Page() {
                 Travelers welcome. Arrive 10 minutes early for a quick intro.
               </p>
             </div>
+            <p className="col-span-2 text-center rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm sm:text-base font-bold tracking-wide text-sky-900">
+              Led by Professional Lifeguard and Certified Personal Trainer.
+            </p>
           </div>
         </div>
       </header>
@@ -221,8 +236,8 @@ export default function Page() {
             ["Warm-up + mobility", "Move better and feel good."],
             ["Sand-based training", "Build balance, stamina, and resilience."],
             ["Bodyweight strength circuits", "Functional, athletic movement patterns."],
-            ["Conditioning intervals", "Short bursts to challenge your pace safely."],
-            ["Cool down", "Stretch and recovery tips for tomorrow."],
+            ["Conditioning intervals", "Short bursts to challenge your anaerobic capacity."],
+            ["Cool down", "Stretch and recovery tips for the next day."],
           ].map(([title, desc]) => (
             <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
               <p className="font-semibold">{title}</p>
@@ -240,7 +255,7 @@ export default function Page() {
               Beginner-friendly coaching, oceanfront setting, and efficient one-hour sessions designed for travel schedules.
             </p>
             <p className="mt-4 text-sm text-slate-600">
-              Bring water and athletic shoes. We handle the workout plan.
+              Bring water and a towel, athletic shoes optional. We’ll handle the workout.
             </p>
           </div>
           <div className="rounded-2xl bg-slate-900 text-white p-6">
