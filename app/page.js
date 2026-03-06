@@ -45,7 +45,7 @@ export default function Page() {
     <main className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900">
       {/* Top bar */}
       <div className="sticky top-0 z-20 backdrop-blur bg-white/70 border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/PoadRoad-2.png" alt="PoadRoad" className="h-8 w-auto" />
             <span className="font-semibold tracking-tight">PoadRoad Beach Workouts</span>
@@ -53,15 +53,15 @@ export default function Page() {
           <div className="flex items-center gap-3">
             <a
               className="text-sm font-medium text-slate-700 hover:text-slate-900"
-              href="#pricing"
+              href="#book"
             >
-              Pricing
+              Book
             </a>
             <a
               className="text-sm font-medium text-slate-700 hover:text-slate-900"
-              href="#coaching"
+              href="#workout"
             >
-              Coaching
+              Workout
             </a>
             <a
               className="text-sm font-medium text-slate-700 hover:text-slate-900"
@@ -74,68 +74,83 @@ export default function Page() {
       </div>
 
       {/* Hero */}
-      <header className="max-w-6xl mx-auto px-6 pt-14 pb-10">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+      <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
           <div>
             <p className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-900">
               Kaimana Beach • Honolulu • Small Group (10 max)
             </p>
 
-            <h1 className="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight">
+            <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight">
               Train like a Hawaii lifeguard.
               <span className="block text-sky-700 mt-2">Strong. Fast. Capable.</span>
             </h1>
 
-            <p className="mt-5 text-lg md:text-xl text-slate-700 max-w-xl">
-              Lifeguard-style beach conditioning designed for all levels.
-              Expect fun and challenging workouts featuring intervals, strength circuits, core, and mobility training.
+            <p className="mt-4 text-lg text-slate-700 max-w-xl">
+              Outdoor beach conditioning built for visitors and locals, with scalable coaching for every fitness level.
+            </p>
+            <p className="mt-2 text-base font-medium text-slate-800">
+              Perfect for visitors who want to stay active while in Honolulu.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-600">
-              <span className="rounded-full bg-white border border-slate-200 px-3 py-1">
+            <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-slate-700">
+              <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
                 Mon • Thu • Fri
               </span>
-              <span className="rounded-full bg-white border border-slate-200 px-3 py-1">
+              <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
                 7:00–8:00 AM
               </span>
-              <span className="rounded-full bg-white border border-slate-200 px-3 py-1">
+              <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
+                Kaimana Beach
+              </span>
+              <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
                 No equipment needed
               </span>
-              <span className="rounded-full bg-white border border-slate-200 px-3 py-1">
-                Visitors welcome
-              </span>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-  <button
-    onClick={() => handleCheckout("dropin")}
-    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold bg-sky-600 text-white hover:bg-sky-700"
-  >
-    Drop-In — $30
-  </button>
+            <div id="book" className="mt-7 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p className="text-sm font-semibold text-slate-900">Drop-In — $30</p>
+                <p className="mt-1 text-xs text-slate-600">Best for trying one class</p>
+                <button
+                  onClick={() => handleCheckout("dropin")}
+                  className="mt-3 w-full rounded-xl px-4 py-3 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
+                >
+                  Book Drop-In
+                </button>
+              </div>
 
-  <button
-    onClick={() => handleCheckout("pack3")}
-    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
-  >
-    Visitor Pack (3) — $81
-  </button>
+              <div className="rounded-3xl border-2 border-sky-500 bg-sky-50 p-4 shadow-sm ring-2 ring-sky-200">
+                <p className="inline-flex rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                  Most Popular
+                </p>
+                <p className="mt-2 text-sm font-semibold text-slate-900">Visitor Pack (3) — $81</p>
+                <p className="mt-1 text-xs text-slate-700">Most popular for 1-week stays</p>
+                <button
+                  onClick={() => handleCheckout("pack3")}
+                  className="mt-3 w-full rounded-xl px-4 py-3 text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700"
+                >
+                  Book Visitor Pack
+                </button>
+              </div>
 
-  <button
-    onClick={() => handleCheckout("pack6")}
-    className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
-  >
-    Extended Stay Pack (6) — $150
-  </button>
-
-              <a
-                href="mailto:poadroadfit@gmail.com"
-                className="rounded-2xl px-6 py-4 text-base md:text-lg font-semibold border border-sky-600 text-sky-700 hover:bg-sky-50"
-              >
-                Email Us
-              </a>
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p className="text-sm font-semibold text-slate-900">Extended Stay Pack (6) — $150</p>
+                <p className="mt-1 text-xs text-slate-600">Best value for 1–2 week stays</p>
+                <button
+                  onClick={() => handleCheckout("pack6")}
+                  className="mt-3 w-full rounded-xl px-4 py-3 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
+                >
+                  Book Extended Stay
+                </button>
+              </div>
             </div>
 
+            <p className="mt-4 text-sm font-medium text-slate-700">
+              Small group training led by a certified lifeguard and trainer.
+            </p>
+
+            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm font-semibold">
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
                 target="_blank"
@@ -144,15 +159,17 @@ export default function Page() {
               >
                 Add to Google Calendar →
               </a>
+              <a
+                href="mailto:poadroadfit@gmail.com"
+                className="text-sm font-semibold text-sky-700 hover:text-sky-800"
+              >
+                Questions? Email us
+              </a>
             </div>
-
-            <p className="mt-4 text-sm text-slate-500">
-              Led by a Professional Lifeguard and Certified Personal Trainer • Kaimana Beach
-            </p>
           </div>
 
           {/* Hero images */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <img
               src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
               alt="Lifeguard workout"
@@ -164,9 +181,11 @@ export default function Page() {
               className="rounded-3xl shadow-lg object-cover w-full h-64 md:h-80 mt-10"
             />
             <div className="col-span-2 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-start justify-between flex-wrap gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-slate-600">Spots Remaining</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">This week at Kaimana</p>
+                  <p className="mt-1 text-sm text-slate-700">Monday, Thursday, Friday • 7:00–8:00 AM</p>
+                  <p className="mt-3 text-sm font-semibold text-slate-600">Spots Remaining</p>
                   <p className="text-3xl font-extrabold">{spotsRemaining} / {maxSpots}</p>
                 </div>
 
@@ -187,21 +206,23 @@ export default function Page() {
                 )}
               </div>
               <p className="mt-3 text-sm text-slate-500">
-                (This counter is temporary. In Step 5 we’ll make it real + automatic.)
+                Travelers welcome. Arrive 10 minutes early for a quick intro.
               </p>
             </div>
           </div>
+        </div>
       </header>
 
       {/* What to expect */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
+      <section id="workout" className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
         <h2 className="text-2xl md:text-3xl font-bold">What you’ll do</h2>
-        <div className="mt-6 grid md:grid-cols-4 gap-4">
+        <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {[
             ["Warm-up + mobility", "Move better and feel good."],
-            ["Sand-based training", "Conditioning like no other."],
+            ["Sand-based training", "Build balance, stamina, and resilience."],
             ["Bodyweight strength circuits", "Functional, athletic movement patterns."],
-            ["Cool down", "Stretch + recovery tips."],
+            ["Conditioning intervals", "Short bursts to challenge your pace safely."],
+            ["Cool down", "Stretch and recovery tips for tomorrow."],
           ].map(([title, desc]) => (
             <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
               <p className="font-semibold">{title}</p>
@@ -211,42 +232,26 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Coaching upsell */}
-      <section id="coaching" className="max-w-6xl mx-auto px-6 py-12">
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm grid lg:grid-cols-2 gap-8 items-center">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm grid md:grid-cols-2 gap-6">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold">Want to keep going?</h2>
+            <h2 className="text-xl md:text-2xl font-bold">Know Before You Go</h2>
             <p className="mt-3 text-slate-700">
-              Upgrade to fully customized online coaching: Stay accountable and take your health and performance to the next level.
+              Beginner-friendly coaching, oceanfront setting, and efficient one-hour sessions designed for travel schedules.
             </p>
-
-            <ul className="mt-5 space-y-2 text-slate-700">
-              <li>• Personalized programming (strength + conditioning)</li>
-              <li>• Nutrition targets + adjustments</li>
-              <li>• Weekly check-ins</li>
-              <li>• Trainerize app delivery</li>
-            </ul>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="mailto:poadroadfit@gmail.com?subject=Online Coaching - PoadRoad"
-                className="rounded-2xl px-6 py-4 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
-              >
-                Apply for Online Coaching
-              </a>
-              <p className="text-sm text-slate-500 self-center">
-                (In Step 5 this becomes an automated recurring membership.)
-              </p>
-            </div>
+            <p className="mt-4 text-sm text-slate-600">
+              Bring water and athletic shoes. We handle the workout plan.
+            </p>
           </div>
-
-          <div className="rounded-3xl bg-slate-900 text-white p-7">
-            <p className="text-sm font-semibold text-white/80">Local search keywords we’ll rank for</p>
-            <p className="mt-3 font-semibold">
-              “Honolulu beach workout” • “Kaimana beach workout” • “Waikiki fitness class” • “Outdoor bootcamp Oahu”
+          <div className="rounded-2xl bg-slate-900 text-white p-6">
+            <p className="text-sm font-semibold text-white/80">Meeting details</p>
+            <p className="mt-2 font-semibold">Kaimana Beach, Honolulu</p>
+            <p className="mt-2 text-sm text-white/90">
+              Monday • Thursday • Friday
             </p>
-            <p className="mt-4 text-white/80 text-sm">
-              Next we’ll add SEO metadata + Google Business Profile signals (Step 4/5).
+            <p className="text-sm text-white/90">7:00–8:00 AM</p>
+            <p className="mt-4 text-sm text-white/80">
+              Questions before booking? Email <a className="underline" href="mailto:poadroadfit@gmail.com">poadroadfit@gmail.com</a>
             </p>
           </div>
         </div>
