@@ -200,7 +200,7 @@ export default function Page() {
           {[
             ["Warm-up + mobility", "Move better and feel good."],
             ["Sand-based training", "Conditioning like no other."],
-            ["Strength circuits", "Functional, athletic movement patterns."],
+            ["Bodyweight strength circuits", "Functional, athletic movement patterns."],
             ["Cool down", "Stretch + recovery tips."],
           ].map(([title, desc]) => (
             <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
@@ -208,29 +208,6 @@ export default function Page() {
               <p className="mt-2 text-sm text-slate-600">{desc}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex items-end justify-between flex-wrap gap-4">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold">Pricing</h2>
-            <p className="mt-2 text-slate-600">Simple options. Tourists and locals welcome.</p>
-          </div>
-          <p className="text-sm text-slate-500">Questions? <a className="underline" href="mailto:poadroadfit@gmail.com">poadroadfit@gmail.com</a></p>
-        </div>
-
-        <div className="mt-6 grid md:grid-cols-3 gap-4">
-          <PricingCard title="Drop-in" price="$30" bullets={["Best for visitors", "One session", "Pay & show up"]} />
-          <PricingCard title="Class Pack" price="$90" subtitle="4 sessions" highlight bullets={["Great value", "Use anytime", "Bring a friend"]} />
-          <PricingCard title="Unlimited" price="$200" subtitle="monthly" bullets={["For locals", "Train consistently", "Best results"]} />
-        </div>
-
-        <div className="mt-6 rounded-3xl bg-sky-50 border border-sky-200 p-6">
-          <p className="font-semibold">Private group experience</p>
-          <p className="text-slate-700 mt-1">Bachelor parties, corporate groups, visiting friends.</p>
-          <p className="mt-2 text-slate-900 font-bold">Starting at $250 / session</p>
         </div>
       </section>
 
@@ -280,18 +257,5 @@ export default function Page() {
         © {new Date().getFullYear()} PoadRoad Beach Workouts • Kaimana Beach • Honolulu
       </footer>
     </main>
-  );
-}
-
-function PricingCard({ title, price, subtitle, bullets, highlight }) {
-  return (
-    <div className={`rounded-3xl border p-6 shadow-sm bg-white ${highlight ? "border-sky-300 ring-2 ring-sky-200" : "border-slate-200"}`}>
-      <p className="font-semibold">{title}</p>
-      <p className="mt-2 text-3xl font-extrabold">{price}</p>
-      {subtitle ? <p className="text-slate-600 mt-1">{subtitle}</p> : null}
-      <ul className="mt-4 space-y-2 text-slate-700 text-sm">
-        {bullets.map((b) => <li key={b}>• {b}</li>)}
-      </ul>
-    </div>
   );
 }
