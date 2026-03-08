@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const CLASS_DAYS = ["Monday", "Thursday", "Friday"];
 const PRODUCT_PRICES = {
@@ -59,16 +59,6 @@ export default function Page() {
   };
 
   const estimatedTotal = PRODUCT_PRICES[estimateType] * quantity;
-
-  const maxSpots = 10;
-  const [spotsTaken, setSpotsTaken] = useState(0);
-
-  const spotsRemaining = useMemo(
-    () => Math.max(maxSpots - spotsTaken, 0),
-    [maxSpots, spotsTaken]
-  );
-
-  const classFull = spotsRemaining === 0;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900">
@@ -140,119 +130,127 @@ export default function Page() {
               </span>
             </div>
 
-            <div id="book" className="mt-7 grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
-              <div className="rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
-                <p className="text-sm font-semibold text-slate-900">Drop-In — $30</p>
-                <p className="mt-1 text-xs text-slate-600">Best for trying one class</p>
-                <button
-                  onClick={() => handleCheckout("dropin")}
-                  className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
-                >
-                  Book Drop-In
-                </button>
+            <div id="book" className="mt-6 space-y-3">
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">1. Choose your days</p>
+                <p className="mt-1 text-sm font-semibold text-slate-900">Pick the days you plan to attend</p>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {CLASS_DAYS.map((day) => {
+                    const active = selectedDays.includes(day);
+                    return (
+                      <label
+                        key={day}
+                        className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium cursor-pointer transition ${
+                          active
+                            ? "border-sky-500 bg-sky-50 text-sky-900"
+                            : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={active}
+                          onChange={() => toggleDay(day)}
+                          className="h-4 w-4 accent-sky-600"
+                        />
+                        {day}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="rounded-3xl border-2 border-sky-500 bg-sky-50 p-3.5 sm:p-4 shadow-sm ring-2 ring-sky-200">
-                <p className="inline-flex rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-                  Most Popular
-                </p>
-                <p className="mt-2 text-sm font-semibold text-slate-900">Visitor Pack (3) — $81</p>
-                <p className="mt-1 text-xs text-slate-700">Most popular for 1-week stays</p>
-                <button
-                  onClick={() => handleCheckout("pack3")}
-                  className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700"
-                >
-                  Book Visitor Pack
-                </button>
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">2. Select quantity</p>
+                <div className="mt-2 flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      Paying For
+                    </span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={10}
+                      value={quantity}
+                      onChange={(e) => {
+                        const parsed = Number.parseInt(e.target.value, 10);
+                        if (!Number.isFinite(parsed)) {
+                          setQuantity(1);
+                          return;
+                        }
+                        setQuantity(Math.min(Math.max(parsed, 1), 10));
+                      }}
+                      className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900"
+                    />
+                  </label>
+
+                  <label className="flex flex-col gap-1.5 flex-1">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      Total Preview
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={estimateType}
+                        onChange={(e) => setEstimateType(e.target.value)}
+                        className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900"
+                      >
+                        <option value="dropin">Drop-In</option>
+                        <option value="pack3">Visitor Pack (3)</option>
+                        <option value="pack6">Extended Stay Pack (6)</option>
+                      </select>
+                      <p className="whitespace-nowrap text-sm font-bold text-slate-900">
+                        Total: ${estimatedTotal}
+                      </p>
+                    </div>
+                  </label>
+                </div>
               </div>
 
-              <div className="col-span-2 lg:col-span-1 rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
-                <p className="text-sm font-semibold text-slate-900">Extended Stay Pack (6) — $150</p>
-                <p className="mt-1 text-xs text-slate-600">Best value for 1–2 week stays</p>
-                <button
-                  onClick={() => handleCheckout("pack6")}
-                  className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
-                >
-                  Book Extended Stay
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-3 sm:p-4">
-              <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                    Paying For
-                  </span>
-                  <input
-                    type="number"
-                    min={1}
-                    max={10}
-                    value={quantity}
-                    onChange={(e) => {
-                      const parsed = Number.parseInt(e.target.value, 10);
-                      if (!Number.isFinite(parsed)) {
-                        setQuantity(1);
-                        return;
-                      }
-                      setQuantity(Math.min(Math.max(parsed, 1), 10));
-                    }}
-                    className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-1.5 flex-1">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                    Total Preview
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <select
-                      value={estimateType}
-                      onChange={(e) => setEstimateType(e.target.value)}
-                      className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900"
+              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">3. Choose your package</p>
+                <div className="mt-3 grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
+                  <div className="rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
+                    <p className="text-sm font-semibold text-slate-900">Drop-In — $30</p>
+                    <p className="mt-1 text-xs text-slate-600">Best for trying one class</p>
+                    <button
+                      onClick={() => handleCheckout("dropin")}
+                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
                     >
-                      <option value="dropin">Drop-In</option>
-                      <option value="pack3">Visitor Pack (3)</option>
-                      <option value="pack6">Extended Stay Pack (6)</option>
-                    </select>
-                    <p className="whitespace-nowrap text-sm font-bold text-slate-900">
-                      Total: ${estimatedTotal}
-                    </p>
+                      Book Drop-In
+                    </button>
                   </div>
-                </label>
-              </div>
-            </div>
 
-            <div className="mt-5 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-              <p className="text-sm font-semibold text-slate-900">Pick the days you plan to attend</p>
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {CLASS_DAYS.map((day) => {
-                  const active = selectedDays.includes(day);
-                  return (
-                    <label
-                      key={day}
-                      className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium cursor-pointer transition ${
-                        active
-                          ? "border-sky-500 bg-sky-50 text-sky-900"
-                          : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-                      }`}
+                  <div className="rounded-3xl border-2 border-sky-500 bg-sky-50 p-3.5 sm:p-4 shadow-sm ring-2 ring-sky-200">
+                    <p className="inline-flex rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                      Most Popular
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900">Visitor Pack (3) — $81</p>
+                    <p className="mt-1 text-xs text-slate-700">Most popular for 1-week stays</p>
+                    <button
+                      onClick={() => handleCheckout("pack3")}
+                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700"
                     >
-                      <input
-                        type="checkbox"
-                        checked={active}
-                        onChange={() => toggleDay(day)}
-                        className="h-4 w-4 accent-sky-600"
-                      />
-                      {day}
-                    </label>
-                  );
-                })}
+                      Book Visitor Pack
+                    </button>
+                  </div>
+
+                  <div className="col-span-2 lg:col-span-1 rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
+                    <p className="text-sm font-semibold text-slate-900">Extended Stay Pack (6) — $150</p>
+                    <p className="mt-1 text-xs text-slate-600">Best value for 1–2 week stays</p>
+                    <button
+                      onClick={() => handleCheckout("pack6")}
+                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
+                    >
+                      Book Extended Stay
+                    </button>
+                  </div>
+                </div>
               </div>
+
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 inline-flex text-sm font-semibold text-slate-700 hover:text-slate-900"
+                className="inline-flex text-sm font-semibold text-slate-700 hover:text-slate-900"
               >
                 Add to Google Calendar →
               </a>
@@ -276,32 +274,10 @@ export default function Page() {
               className="rounded-3xl shadow-lg object-cover w-full h-56 sm:h-64 md:h-80 -mt-2 sm:mt-6"
             />
             <div className="col-span-2 rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
-              <div className="flex items-start justify-between flex-wrap gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">This week at Kaimana</p>
-                  <p className="mt-1 text-sm text-slate-700">Monday, Thursday, Friday • 7:00–8:00 AM</p>
-                  <p className="mt-3 text-sm font-semibold text-slate-600">Spots Remaining</p>
-                  <p className="text-3xl font-extrabold">{spotsRemaining} / {maxSpots}</p>
-                </div>
-
-                {!classFull ? (
-                  <button
-                    onClick={() => setSpotsTaken((s) => Math.min(s + 1, maxSpots))}
-                    className="rounded-2xl px-5 py-3 font-semibold bg-slate-900 text-white hover:bg-slate-800 transition"
-                  >
-                    Reserve Spot
-                  </button>
-                ) : (
-                  <a
-                    href="mailto:poadroadfit@gmail.com?subject=Waitlist Request - PoadRoad Beach Workout"
-                    className="rounded-2xl px-5 py-3 font-semibold border-2 border-slate-900 text-slate-900 hover:bg-slate-50 transition"
-                  >
-                    Class Full — Join Waitlist
-                  </a>
-                )}
-              </div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">This week at Kaimana</p>
+              <p className="mt-1 text-sm text-slate-700">Monday, Thursday, Friday • 7:00–8:00 AM</p>
               <p className="mt-3 text-sm text-slate-500">
-                Travelers welcome. Arrive 10 minutes early for a quick intro.
+                Booking is completed directly through the package buttons.
               </p>
             </div>
             </div>
