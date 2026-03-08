@@ -35,6 +35,7 @@ export async function POST(req) {
   }
 
   const type = payload?.type;
+  const rawQuantity = payload?.quantity;
   const attendanceDays = Array.isArray(payload?.attendanceDays)
     ? payload.attendanceDays
         .filter((day) => typeof day === "string")
@@ -43,6 +44,12 @@ export async function POST(req) {
         .slice(0, 3)
     : [];
   const priceEnvKey = TYPE_TO_ENV_KEY[type];
+  const parsedQuantity = Number.isInteger(rawQuantity)
+    ? rawQuantity
+    : Number.parseInt(rawQuantity, 10);
+  const quantity = Number.isFinite(parsedQuantity)
+    ? Math.min(Math.max(parsedQuantity, 1), 10)
+    : 1;
 
   if (!priceEnvKey) {
     console.warn("[checkout] invalid type requested", {
@@ -67,6 +74,7 @@ export async function POST(req) {
 
   console.info("[checkout] request received", {
     type,
+    quantity,
     attendanceDaysCount: attendanceDays.length,
     envPresent: {
       stripeSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
@@ -82,11 +90,14 @@ export async function POST(req) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      line_items: [{ price: priceId, quantity: 1 }],
-      metadata:
-        attendanceDays.length > 0
+      line_items: [{ price: priceId, quantity }],
+      metadata: {
+        purchase_type: type,
+        quantity: String(quantity),
+        ...(attendanceDays.length > 0
           ? { selected_days: attendanceDays.join(", ") }
-          : undefined,
+          : {}),
+      },
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/canceled`,
     });

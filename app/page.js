@@ -3,9 +3,16 @@
 import { useMemo, useState } from "react";
 
 const CLASS_DAYS = ["Monday", "Thursday", "Friday"];
+const PRODUCT_PRICES = {
+  dropin: 30,
+  pack3: 81,
+  pack6: 150,
+};
 
 export default function Page() {
   const [selectedDays, setSelectedDays] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [estimateType, setEstimateType] = useState("dropin");
 
   const toggleDay = (day) => {
     setSelectedDays((current) =>
@@ -16,13 +23,21 @@ export default function Page() {
   };
 
   const handleCheckout = async (type) => {
+    const safeQuantity = Number.isFinite(quantity)
+      ? Math.min(Math.max(Math.floor(quantity), 1), 10)
+      : 1;
+
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type, attendanceDays: selectedDays }),
+        body: JSON.stringify({
+          type,
+          quantity: safeQuantity,
+          attendanceDays: selectedDays,
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -42,6 +57,8 @@ export default function Page() {
       alert("Network error while starting checkout. Please try again.");
     }
   };
+
+  const estimatedTotal = PRODUCT_PRICES[estimateType] * quantity;
 
   const maxSpots = 10;
   const [spotsTaken, setSpotsTaken] = useState(0);
@@ -158,6 +175,51 @@ export default function Page() {
                 >
                   Book Extended Stay
                 </button>
+              </div>
+            </div>
+
+            <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-3 sm:p-4">
+              <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Paying For
+                  </span>
+                  <input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={quantity}
+                    onChange={(e) => {
+                      const parsed = Number.parseInt(e.target.value, 10);
+                      if (!Number.isFinite(parsed)) {
+                        setQuantity(1);
+                        return;
+                      }
+                      setQuantity(Math.min(Math.max(parsed, 1), 10));
+                    }}
+                    className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900"
+                  />
+                </label>
+
+                <label className="flex flex-col gap-1.5 flex-1">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Total Preview
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={estimateType}
+                      onChange={(e) => setEstimateType(e.target.value)}
+                      className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900"
+                    >
+                      <option value="dropin">Drop-In</option>
+                      <option value="pack3">Visitor Pack (3)</option>
+                      <option value="pack6">Extended Stay Pack (6)</option>
+                    </select>
+                    <p className="whitespace-nowrap text-sm font-bold text-slate-900">
+                      Total: ${estimatedTotal}
+                    </p>
+                  </div>
+                </label>
               </div>
             </div>
 
