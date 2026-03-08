@@ -35,6 +35,13 @@ export async function POST(req) {
   }
 
   const type = payload?.type;
+  const attendanceDays = Array.isArray(payload?.attendanceDays)
+    ? payload.attendanceDays
+        .filter((day) => typeof day === "string")
+        .map((day) => day.trim())
+        .filter((day) => day.length > 0)
+        .slice(0, 3)
+    : [];
   const priceEnvKey = TYPE_TO_ENV_KEY[type];
 
   if (!priceEnvKey) {
@@ -60,6 +67,7 @@ export async function POST(req) {
 
   console.info("[checkout] request received", {
     type,
+    attendanceDaysCount: attendanceDays.length,
     envPresent: {
       stripeSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
       siteUrl: Boolean(process.env.NEXT_PUBLIC_SITE_URL),
@@ -75,6 +83,10 @@ export async function POST(req) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [{ price: priceId, quantity: 1 }],
+      metadata:
+        attendanceDays.length > 0
+          ? { attendance_days: attendanceDays.join(", ") }
+          : undefined,
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/canceled`,
     });

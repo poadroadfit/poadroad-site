@@ -2,7 +2,19 @@
 
 import { useMemo, useState } from "react";
 
+const CLASS_DAYS = ["Monday", "Thursday", "Friday"];
+
 export default function Page() {
+  const [selectedDays, setSelectedDays] = useState([]);
+
+  const toggleDay = (day) => {
+    setSelectedDays((current) =>
+      current.includes(day)
+        ? current.filter((item) => item !== day)
+        : [...current, day]
+    );
+  };
+
   const handleCheckout = async (type) => {
     try {
       const res = await fetch("/api/checkout", {
@@ -10,7 +22,7 @@ export default function Page() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type }),
+        body: JSON.stringify({ type, attendanceDays: selectedDays }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -59,12 +71,6 @@ export default function Page() {
             </a>
             <a
               className="text-sm font-medium text-slate-700 hover:text-slate-900"
-              href="#workout"
-            >
-              Workout
-            </a>
-            <a
-              className="text-sm font-medium text-slate-700 hover:text-slate-900"
               href="mailto:poadroadfit@gmail.com"
             >
               Email
@@ -90,7 +96,7 @@ export default function Page() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
           <div>
             <p className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-900">
-              Kaimana Beach • Honolulu • Small Group (10 max)
+              Kaimana Beach • Honolulu • Small Group
             </p>
 
             <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight">
@@ -100,9 +106,6 @@ export default function Page() {
 
             <p className="mt-4 text-lg text-slate-700 max-w-xl">
               Outdoor beach workouts for both visitors and locals. Designed to be fun, challenging, and open to all fitness levels.
-            </p>
-            <p className="mt-2 text-base font-medium text-slate-800">
-              Perfect for visitors who want to stay active while in Honolulu.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-slate-700">
@@ -158,30 +161,48 @@ export default function Page() {
               </div>
             </div>
 
-            <p className="mt-4 text-sm font-medium text-slate-700">
-              Small group training led by a certified lifeguard and trainer.
-            </p>
-
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm font-semibold">
+            <div className="mt-5 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
+              <p className="text-sm font-semibold text-slate-900">Pick the days you plan to attend</p>
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {CLASS_DAYS.map((day) => {
+                  const active = selectedDays.includes(day);
+                  return (
+                    <label
+                      key={day}
+                      className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium cursor-pointer transition ${
+                        active
+                          ? "border-sky-500 bg-sky-50 text-sky-900"
+                          : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={active}
+                        onChange={() => toggleDay(day)}
+                        className="h-4 w-4 accent-sky-600"
+                      />
+                      {day}
+                    </label>
+                  );
+                })}
+              </div>
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm font-semibold text-slate-700 hover:text-slate-900"
+                className="mt-4 inline-flex text-sm font-semibold text-slate-700 hover:text-slate-900"
               >
                 Add to Google Calendar →
-              </a>
-              <a
-                href="mailto:poadroadfit@gmail.com"
-                className="text-sm font-semibold text-sky-700 hover:text-sky-800"
-              >
-                Questions? Email us
               </a>
             </div>
           </div>
 
           {/* Hero images */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div>
+            <p className="mb-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
+              Led by Professional Lifeguard and Certified Personal Trainer.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <img
               src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
               alt="Lifeguard workout"
@@ -190,9 +211,9 @@ export default function Page() {
             <img
               src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
               alt="Beach training"
-              className="rounded-3xl shadow-lg object-cover w-full h-64 md:h-80 mt-10"
+              className="rounded-3xl shadow-lg object-cover w-full h-64 md:h-80 sm:mt-10"
             />
-            <div className="col-span-2 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="sm:col-span-2 rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
               <div className="flex items-start justify-between flex-wrap gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">This week at Kaimana</p>
@@ -221,40 +242,16 @@ export default function Page() {
                 Travelers welcome. Arrive 10 minutes early for a quick intro.
               </p>
             </div>
-            <p className="col-span-2 text-center rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm sm:text-base font-bold tracking-wide text-sky-900">
-              Led by Professional Lifeguard and Certified Personal Trainer.
-            </p>
+            </div>
           </div>
         </div>
       </header>
-
-      {/* What to expect */}
-      <section id="workout" className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
-        <h2 className="text-2xl md:text-3xl font-bold">What you’ll do</h2>
-        <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {[
-            ["Warm-up + mobility", "Move better and feel good."],
-            ["Sand-based training", "Build balance, stamina, and resilience."],
-            ["Bodyweight strength circuits", "Functional, athletic movement patterns."],
-            ["Conditioning intervals", "Short bursts to challenge your anaerobic capacity."],
-            ["Cool down", "Stretch and recovery tips for the next day."],
-          ].map(([title, desc]) => (
-            <div key={title} className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
-              <p className="font-semibold">{title}</p>
-              <p className="mt-2 text-sm text-slate-600">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
         <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm grid md:grid-cols-2 gap-6">
           <div>
             <h2 className="text-xl md:text-2xl font-bold">Know Before You Go</h2>
-            <p className="mt-3 text-slate-700">
-              Beginner-friendly coaching, oceanfront setting, and efficient one-hour sessions designed for travel schedules.
-            </p>
-            <p className="mt-4 text-sm text-slate-600">
+            <p className="mt-4 text-base sm:text-lg text-slate-700">
               Bring water and a towel, athletic shoes optional. We’ll handle the workout.
             </p>
           </div>
@@ -265,9 +262,6 @@ export default function Page() {
               Monday • Thursday • Friday
             </p>
             <p className="text-sm text-white/90">7:00–8:00 AM</p>
-            <p className="mt-4 text-sm text-white/80">
-              Questions before booking? Email <a className="underline" href="mailto:poadroadfit@gmail.com">poadroadfit@gmail.com</a>
-            </p>
           </div>
         </div>
       </section>
