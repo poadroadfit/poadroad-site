@@ -85,7 +85,7 @@ export async function POST(req) {
       line_items: [{ price: priceId, quantity: 1 }],
       metadata:
         attendanceDays.length > 0
-          ? { attendance_days: attendanceDays.join(", ") }
+          ? { selected_days: attendanceDays.join(", ") }
           : undefined,
       success_url: `${siteUrl}/success`,
       cancel_url: `${siteUrl}/canceled`,
