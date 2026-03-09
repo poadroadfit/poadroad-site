@@ -116,7 +116,11 @@ export default function Page() {
           <div>
             <h1 className="mt-2 text-4xl md:text-6xl font-extrabold tracking-tight">
               Train like a Hawaii lifeguard.
-              <span className="block text-sky-700 mt-2">Strong. Fast. Capable.</span>
+              <span className="block text-sky-700 mt-2">
+                <span>Strong. </span>
+                <span className="text-yellow-500">Fast. </span>
+                <span className="text-red-500">Capable.</span>
+              </span>
             </h1>
 
             <div className="mt-4 max-w-2xl">
