@@ -118,7 +118,7 @@ export default function Page() {
               Train like a Hawaii lifeguard.
               <span className="block text-sky-700 mt-2">
                 <span>Strong. </span>
-                <span className="text-yellow-500">Fast. </span>
+                <span className="text-yellow-400">Fast. </span>
                 <span className="text-red-500">Capable.</span>
               </span>
             </h1>
