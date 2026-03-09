@@ -134,7 +134,7 @@ export default function Page() {
             </h1>
 
             <p className="mt-4 text-lg text-slate-700 max-w-xl">
-              Outdoor beach workouts for both visitors and locals. Designed to be fun, challenging, and open to all fitness levels.
+              Outdoor beach workouts for both visitors and locals. You can expect a variety of bodyweight strength and conditioning movements and exercises. Designed to be fun, challenging, and open to all fitness levels.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-slate-700">
