@@ -274,17 +274,12 @@ export default function Page() {
               <img
                 src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
                 alt="Runner by the ocean"
-                className="col-span-2 sm:col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-80"
+                className="col-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-80 sm:h-[28rem]"
               />
               <img
                 src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
                 alt="Lifeguard workout"
-                className="col-span-2 sm:col-span-1 sm:row-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-full sm:min-h-[32rem]"
-              />
-              <img
-                src="/PoadRoad-2.png"
-                alt="PoadRoad beach workouts"
-                className="col-span-2 sm:col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-52 sm:h-48"
+                className="col-span-2 sm:col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-64 sm:h-72"
               />
             </div>
           </div>
