@@ -11,7 +11,7 @@ const PRODUCT_PRICES = {
 const PACKAGE_OPTIONS = [
   { type: "dropin", label: "Drop-In", price: 30, note: "Best for trying one class" },
   { type: "pack3", label: "3-Pack", price: 81, note: "Most popular for 1-week stays" },
-  { type: "pack6", label: "Extended Stay Pack", price: 150, note: "Best value for 1–2 week stays" },
+  { type: "pack6", label: "6-Pack", price: 150, note: "Best value for 1–2 week stays" },
 ];
 
 export default function Page() {
