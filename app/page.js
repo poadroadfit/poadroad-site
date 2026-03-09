@@ -112,8 +112,8 @@ export default function Page() {
 
       {/* Hero */}
       <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-          <div>
+        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-10 items-start">
+          <div className="order-1 lg:col-start-1">
             <h1 className="mt-2 text-4xl md:text-6xl font-extrabold tracking-tight">
               Train like a Hawaii lifeguard.
               <span className="block text-sky-700 mt-2">
@@ -151,8 +151,33 @@ export default function Page() {
                 No equipment needed
               </span>
             </div>
+          </div>
 
-            <div id="book" className="mt-6 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5 space-y-4">
+          {/* Hero images */}
+          <div className="order-2 lg:order-2 lg:col-start-2 lg:row-span-2">
+            <p className="mb-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
+              Led by Professional Lifeguard and Certified Personal Trainer.
+            </p>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <img
+                src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
+                alt="Runner by the ocean"
+                className="col-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-[28rem]"
+              />
+              <img
+                src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
+                alt="Two people with a rescue board"
+                className="hidden sm:block col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-72"
+              />
+              <img
+                src="/running.jpg"
+                alt="Running on the beach"
+                className="hidden sm:block col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-72"
+              />
+            </div>
+          </div>
+
+          <div id="book" className="order-3 lg:order-3 lg:col-start-1 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5 space-y-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">1. Choose package</p>
                 <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -262,29 +287,19 @@ export default function Page() {
               >
                 Add to Google Calendar →
               </a>
-            </div>
           </div>
 
-          {/* Hero images */}
-          <div>
-            <p className="mb-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
-              Led by Professional Lifeguard and Certified Personal Trainer.
-            </p>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <img
-                src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
-                alt="Runner by the ocean"
-                className="col-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-[28rem]"
-              />
+          <div className="order-4 sm:hidden">
+            <div className="grid grid-cols-2 gap-3">
               <img
                 src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
                 alt="Two people with a rescue board"
-                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-44 sm:h-72"
+                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-40"
               />
               <img
                 src="/running.jpg"
                 alt="Running on the beach"
-                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-44 sm:h-72"
+                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-40"
               />
             </div>
           </div>
