@@ -8,11 +8,16 @@ const PRODUCT_PRICES = {
   pack3: 81,
   pack6: 150,
 };
+const PACKAGE_OPTIONS = [
+  { type: "dropin", label: "Drop-In", price: 30, note: "Best for trying one class" },
+  { type: "pack3", label: "3-Pack", price: 81, note: "Most popular for 1-week stays" },
+  { type: "pack6", label: "Extended Stay Pack", price: 150, note: "Best value for 1–2 week stays" },
+];
 
 export default function Page() {
   const [selectedDays, setSelectedDays] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [estimateType, setEstimateType] = useState("dropin");
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
   const toggleDay = (day) => {
     setSelectedDays((current) =>
@@ -58,7 +63,10 @@ export default function Page() {
     }
   };
 
-  const estimatedTotal = PRODUCT_PRICES[estimateType] * quantity;
+  const estimatedTotal = selectedPackage ? PRODUCT_PRICES[selectedPackage] * quantity : 0;
+  const selectedPackageDetails = PACKAGE_OPTIONS.find(
+    (item) => item.type === selectedPackage
+  );
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900">
@@ -130,121 +138,101 @@ export default function Page() {
               </span>
             </div>
 
-            <div id="book" className="mt-6 space-y-3">
-              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">1. Choose your days</p>
-                <p className="mt-1 text-sm font-semibold text-slate-900">Pick the days you plan to attend</p>
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                  {CLASS_DAYS.map((day) => {
-                    const active = selectedDays.includes(day);
+            <div id="book" className="mt-6 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5 space-y-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">1. Choose package</p>
+                <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {PACKAGE_OPTIONS.map((pkg) => {
+                    const active = selectedPackage === pkg.type;
                     return (
-                      <label
-                        key={day}
-                        className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium cursor-pointer transition ${
+                      <button
+                        key={pkg.type}
+                        type="button"
+                        onClick={() => setSelectedPackage(pkg.type)}
+                        className={`rounded-2xl border px-3.5 py-3 text-left transition ${
                           active
-                            ? "border-sky-500 bg-sky-50 text-sky-900"
-                            : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                            ? "border-sky-500 bg-sky-50 ring-2 ring-sky-200"
+                            : "border-slate-200 bg-white hover:bg-slate-50"
                         }`}
                       >
-                        <input
-                          type="checkbox"
-                          checked={active}
-                          onChange={() => toggleDay(day)}
-                          className="h-4 w-4 accent-sky-600"
-                        />
-                        {day}
-                      </label>
+                        <p className="text-sm font-semibold text-slate-900">{pkg.label} - ${pkg.price}</p>
+                        <p className="mt-1 text-xs text-slate-600">{pkg.note}</p>
+                      </button>
                     );
                   })}
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">2. Select quantity</p>
-                <div className="mt-2 flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-4">
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                      Paying For
-                    </span>
-                    <input
-                      type="number"
-                      min={1}
-                      max={10}
-                      value={quantity}
-                      onChange={(e) => {
-                        const parsed = Number.parseInt(e.target.value, 10);
-                        if (!Number.isFinite(parsed)) {
-                          setQuantity(1);
-                          return;
-                        }
-                        setQuantity(Math.min(Math.max(parsed, 1), 10));
-                      }}
-                      className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900"
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1.5 flex-1">
-                    <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                      Total Preview
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <select
-                        value={estimateType}
-                        onChange={(e) => setEstimateType(e.target.value)}
-                        className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900"
-                      >
-                        <option value="dropin">Drop-In</option>
-                        <option value="pack3">Visitor Pack (3)</option>
-                        <option value="pack6">Extended Stay Pack (6)</option>
-                      </select>
-                      <p className="whitespace-nowrap text-sm font-bold text-slate-900">
-                        Total: ${estimatedTotal}
-                      </p>
+              {selectedPackage ? (
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5 sm:p-4 space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">2. Choose days</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">What days do you plan on coming?</p>
+                    <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      {CLASS_DAYS.map((day) => {
+                        const active = selectedDays.includes(day);
+                        return (
+                          <label
+                            key={day}
+                            className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium cursor-pointer transition ${
+                              active
+                                ? "border-sky-500 bg-sky-50 text-sky-900"
+                                : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={active}
+                              onChange={() => toggleDay(day)}
+                              className="h-4 w-4 accent-sky-600"
+                            />
+                            {day}
+                          </label>
+                        );
+                      })}
                     </div>
-                  </label>
-                </div>
-              </div>
-
-              <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">3. Choose your package</p>
-                <div className="mt-3 grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
-                  <div className="rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
-                    <p className="text-sm font-semibold text-slate-900">Drop-In — $30</p>
-                    <p className="mt-1 text-xs text-slate-600">Best for trying one class</p>
-                    <button
-                      onClick={() => handleCheckout("dropin")}
-                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
-                    >
-                      Book Drop-In
-                    </button>
                   </div>
 
-                  <div className="rounded-3xl border-2 border-sky-500 bg-sky-50 p-3.5 sm:p-4 shadow-sm ring-2 ring-sky-200">
-                    <p className="inline-flex rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
-                      Most Popular
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-slate-900">Visitor Pack (3) — $81</p>
-                    <p className="mt-1 text-xs text-slate-700">Most popular for 1-week stays</p>
-                    <button
-                      onClick={() => handleCheckout("pack3")}
-                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700"
-                    >
-                      Book Visitor Pack
-                    </button>
-                  </div>
+                  <div className="grid sm:grid-cols-[auto,1fr] gap-3 sm:items-end">
+                    <label className="flex flex-col gap-1">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        3. Choose quantity
+                      </span>
+                      <span className="text-sm font-semibold text-slate-900">How many people?</span>
+                      <input
+                        type="number"
+                        min={1}
+                        max={10}
+                        value={quantity}
+                        onChange={(e) => {
+                          const parsed = Number.parseInt(e.target.value, 10);
+                          if (!Number.isFinite(parsed)) {
+                            setQuantity(1);
+                            return;
+                          }
+                          setQuantity(Math.min(Math.max(parsed, 1), 10));
+                        }}
+                        className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900"
+                      />
+                    </label>
 
-                  <div className="col-span-2 lg:col-span-1 rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm">
-                    <p className="text-sm font-semibold text-slate-900">Extended Stay Pack (6) — $150</p>
-                    <p className="mt-1 text-xs text-slate-600">Best value for 1–2 week stays</p>
-                    <button
-                      onClick={() => handleCheckout("pack6")}
-                      className="mt-2.5 w-full rounded-xl px-3 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
-                    >
-                      Book Extended Stay
-                    </button>
+                    <div className="sm:justify-self-end">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">4. Checkout</p>
+                      <p className="mt-1 text-sm text-slate-700">
+                        {selectedDays.length > 0 ? selectedDays.join(", ") : "No days selected yet"} · {quantity} {quantity === 1 ? "person" : "people"}
+                      </p>
+                      <button
+                        onClick={() => handleCheckout(selectedPackage)}
+                        className="mt-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
+                      >
+                        Checkout {selectedPackageDetails?.label} - ${estimatedTotal}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <p className="text-sm text-slate-600">Select a package to continue.</p>
+              )}
 
               <a
                 href="https://calendar.google.com/calendar/r/eventedit?text=PoadRoad+Beach+Workout&details=Kaimana+Beach+Workout&location=Kaimana+Beach"
