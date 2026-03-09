@@ -155,25 +155,30 @@ export default function Page() {
 
           {/* Hero images */}
           <div className="order-2 lg:order-2 lg:col-start-2 lg:row-span-2">
-            <p className="mb-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
-              Led by Professional Lifeguard and Certified Personal Trainer.
-            </p>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <img
-                src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
-                alt="Runner by the ocean"
-                className="col-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-[28rem]"
-              />
-              <img
-                src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
-                alt="Two people with a rescue board"
-                className="hidden sm:block col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-72"
-              />
-              <img
-                src="/running.jpg"
-                alt="Running on the beach"
-                className="hidden sm:block col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-72"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-3 sm:space-y-4">
+                <img
+                  src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
+                  alt="Main beach workout portrait"
+                  className="rounded-3xl shadow-lg object-cover object-center w-full h-72 sm:h-[28rem]"
+                />
+                <p className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
+                  Led by Professional Lifeguard and Certified Personal Trainer.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                <img
+                  src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
+                  alt="Two people with a rescue board"
+                  className="rounded-3xl shadow-lg object-cover object-center w-full h-52 sm:h-[13.5rem]"
+                />
+                <img
+                  src="/running.jpg"
+                  alt="Running on the beach"
+                  className="rounded-3xl shadow-lg object-cover object-[center_20%] w-full h-56 sm:h-[13.5rem]"
+                />
+              </div>
             </div>
           </div>
 
@@ -289,20 +294,6 @@ export default function Page() {
               </a>
           </div>
 
-          <div className="order-4 sm:hidden">
-            <div className="grid grid-cols-2 gap-3">
-              <img
-                src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
-                alt="Two people with a rescue board"
-                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-40"
-              />
-              <img
-                src="/running.jpg"
-                alt="Running on the beach"
-                className="col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-40"
-              />
-            </div>
-          </div>
         </div>
       </header>
 
