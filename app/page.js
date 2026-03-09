@@ -133,9 +133,25 @@ export default function Page() {
               <span className="block text-sky-700 mt-2">Strong. Fast. Capable.</span>
             </h1>
 
-            <p className="mt-4 text-lg text-slate-700 max-w-xl">
-              Outdoor beach workouts for both visitors and locals. You can expect a variety of bodyweight strength and conditioning movements and exercises. Designed to be fun, challenging, and open to all fitness levels.
-            </p>
+            <div className="mt-4 max-w-2xl">
+              <p className="text-lg text-slate-700">
+                Outdoor beach workouts for both visitors and locals
+              </p>
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                {[
+                  "Bodyweight strength & conditioning",
+                  "Fun, challenging workouts",
+                  "Open to all fitness levels",
+                ].map((chip) => (
+                  <div
+                    key={chip}
+                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-center text-sm font-medium text-slate-700"
+                  >
+                    {chip}
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-slate-700">
               <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
