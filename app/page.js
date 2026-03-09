@@ -270,16 +270,21 @@ export default function Page() {
             <p className="mb-3 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-center text-sm sm:text-base font-bold tracking-wide text-sky-900">
               Led by Professional Lifeguard and Certified Personal Trainer.
             </p>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 auto-rows-[9.5rem] sm:auto-rows-[12rem] md:auto-rows-[13rem]">
+              <img
+                src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
+                alt="Runner by the ocean"
+                className="col-span-2 rounded-3xl shadow-lg object-cover object-center w-full h-full sm:col-span-1 sm:row-span-2"
+              />
             <img
               src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
               alt="Lifeguard workout"
-              className="rounded-3xl shadow-lg object-cover w-full h-56 sm:h-64 md:h-80"
+              className="col-span-2 sm:col-span-1 rounded-3xl shadow-lg object-cover object-center w-full h-full"
             />
             <img
-              src="/0D8D433E-DC1E-495F-B66A-9E505F0D30BB.jpg"
-              alt="Beach training"
-              className="rounded-3xl shadow-lg object-cover w-full h-56 sm:h-64 md:h-80 -mt-2 sm:mt-6"
+              src="/CE6CA954-FBCB-401F-9B86-0C7336744F72.jpg"
+              alt="Beach conditioning session"
+              className="col-span-2 sm:col-span-1 rounded-3xl shadow-lg object-cover object-top w-full h-full"
             />
             </div>
           </div>
