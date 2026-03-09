@@ -111,14 +111,10 @@ export default function Page() {
       </div>
 
       {/* Hero */}
-      <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
+      <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
           <div>
-            <p className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-900">
-              Kaimana Beach • Honolulu • Small Group
-            </p>
-
-            <h1 className="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight">
+            <h1 className="mt-2 text-4xl md:text-6xl font-extrabold tracking-tight">
               Train like a Hawaii lifeguard.
               <span className="block text-sky-700 mt-2">Strong. Fast. Capable.</span>
             </h1>
@@ -127,7 +123,7 @@ export default function Page() {
               <p className="text-lg font-bold text-slate-700">
                 Outdoor beach workouts for both visitors and locals
               </p>
-              <ul className="mt-3 space-y-1.5 pl-5 text-sm text-slate-700">
+              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-700">
                 <li>Bodyweight strength &amp; conditioning</li>
                 <li>Fun, challenging workouts</li>
                 <li>Open to all fitness levels</li>
@@ -143,6 +139,9 @@ export default function Page() {
               </span>
               <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
                 Kaimana Beach
+              </span>
+              <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
+                Small Group
               </span>
               <span className="rounded-full bg-white border border-slate-200 px-3 py-1 font-medium">
                 No equipment needed
