@@ -281,13 +281,6 @@ export default function Page() {
               alt="Beach training"
               className="rounded-3xl shadow-lg object-cover w-full h-56 sm:h-64 md:h-80 -mt-2 sm:mt-6"
             />
-            <div className="col-span-2 rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">This week at Kaimana</p>
-              <p className="mt-1 text-sm text-slate-700">Monday, Thursday, Friday • 7:00–8:00 AM</p>
-              <p className="mt-3 text-sm text-slate-500">
-                Booking is completed directly through the package buttons.
-              </p>
-            </div>
             </div>
           </div>
         </div>
