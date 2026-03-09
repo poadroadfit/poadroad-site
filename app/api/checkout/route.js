@@ -36,6 +36,7 @@ export async function POST(req) {
 
   const type = payload?.type;
   const rawQuantity = payload?.quantity;
+  const rawSelectedDayCount = payload?.selectedDayCount;
   const attendanceDays = Array.isArray(payload?.attendanceDays)
     ? payload.attendanceDays
         .filter((day) => typeof day === "string")
@@ -50,6 +51,10 @@ export async function POST(req) {
   const quantity = Number.isFinite(parsedQuantity)
     ? Math.min(Math.max(parsedQuantity, 1), 10)
     : 1;
+  const parsedSelectedDayCount = Number.isInteger(rawSelectedDayCount)
+    ? rawSelectedDayCount
+    : Number.parseInt(rawSelectedDayCount, 10);
+  const selectedDayCount = attendanceDays.length;
 
   if (!priceEnvKey) {
     console.warn("[checkout] invalid type requested", {
@@ -71,10 +76,24 @@ export async function POST(req) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, "");
   const priceId = process.env[priceEnvKey];
+  const billedSessions =
+    type === "dropin" ? quantity * selectedDayCount : quantity;
+
+  if (type === "dropin" && selectedDayCount === 0) {
+    return json(
+      { error: "Drop-In requires at least one selected attendance day." },
+      400
+    );
+  }
 
   console.info("[checkout] request received", {
     type,
     quantity,
+    selectedDayCount,
+    selectedDayCountProvided: Number.isFinite(parsedSelectedDayCount)
+      ? parsedSelectedDayCount
+      : "invalid_or_missing",
+    billedSessions,
     attendanceDaysCount: attendanceDays.length,
     envPresent: {
       stripeSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
@@ -90,10 +109,11 @@ export async function POST(req) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      line_items: [{ price: priceId, quantity }],
+      line_items: [{ price: priceId, quantity: billedSessions }],
       metadata: {
         purchase_type: type,
         quantity: String(quantity),
+        billed_sessions: String(billedSessions),
         ...(attendanceDays.length > 0
           ? { selected_days: attendanceDays.join(", ") }
           : {}),

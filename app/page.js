@@ -31,6 +31,12 @@ export default function Page() {
     const safeQuantity = Number.isFinite(quantity)
       ? Math.min(Math.max(Math.floor(quantity), 1), 10)
       : 1;
+    const selectedDayCount = selectedDays.length;
+
+    if (type === "dropin" && selectedDayCount === 0) {
+      alert("Please select at least one day for Drop-In checkout.");
+      return;
+    }
 
     try {
       const res = await fetch("/api/checkout", {
@@ -42,6 +48,7 @@ export default function Page() {
           type,
           quantity: safeQuantity,
           attendanceDays: selectedDays,
+          selectedDayCount,
         }),
       });
 
@@ -63,10 +70,17 @@ export default function Page() {
     }
   };
 
-  const estimatedTotal = selectedPackage ? PRODUCT_PRICES[selectedPackage] * quantity : 0;
+  const selectedDayCount = selectedDays.length;
+  const dropinMultiplier = selectedDayCount > 0 ? selectedDayCount : 1;
+  const estimatedTotal = selectedPackage
+    ? selectedPackage === "dropin"
+      ? PRODUCT_PRICES.dropin * dropinMultiplier * quantity
+      : PRODUCT_PRICES[selectedPackage] * quantity
+    : 0;
   const selectedPackageDetails = PACKAGE_OPTIONS.find(
     (item) => item.type === selectedPackage
   );
+  const isDropinWithoutDays = selectedPackage === "dropin" && selectedDayCount === 0;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900">
@@ -221,9 +235,15 @@ export default function Page() {
                       <p className="mt-1 text-sm text-slate-700">
                         {selectedDays.length > 0 ? selectedDays.join(", ") : "No days selected yet"} · {quantity} {quantity === 1 ? "person" : "people"}
                       </p>
+                      {isDropinWithoutDays ? (
+                        <p className="mt-1 text-xs font-medium text-amber-700">
+                          Select at least one day to checkout Drop-In.
+                        </p>
+                      ) : null}
                       <button
                         onClick={() => handleCheckout(selectedPackage)}
-                        className="mt-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800"
+                        disabled={isDropinWithoutDays}
+                        className="mt-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
                       >
                         Checkout {selectedPackageDetails?.label} - ${estimatedTotal}
                       </button>
