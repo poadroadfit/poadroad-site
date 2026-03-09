@@ -89,7 +89,9 @@ export default function Page() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/PoadRoad-2.png" alt="PoadRoad" className="h-8 w-auto" />
-            <span className="font-semibold tracking-tight">PoadRoad Beach Workouts</span>
+            <span className="text-base sm:text-lg font-bold tracking-tight bg-gradient-to-r from-sky-700 to-cyan-600 bg-clip-text text-transparent">
+              PoadRoad Beach Workouts
+            </span>
           </div>
           <div className="flex items-center gap-3">
             <a
@@ -108,18 +110,6 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="border-b border-slate-200 bg-white/60">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-3 pb-2">
-          <div className="h-12 sm:h-14 w-full rounded-2xl border border-slate-200/70 bg-sky-50/60 overflow-hidden">
-            <img
-              src="/PoadRoad-2.png"
-              alt="PoadRoad banner"
-              className="h-full w-full object-cover opacity-25"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Hero */}
       <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
@@ -134,23 +124,14 @@ export default function Page() {
             </h1>
 
             <div className="mt-4 max-w-2xl">
-              <p className="text-lg text-slate-700">
+              <p className="text-lg font-bold text-slate-700">
                 Outdoor beach workouts for both visitors and locals
               </p>
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                {[
-                  "Bodyweight strength & conditioning",
-                  "Fun, challenging workouts",
-                  "Open to all fitness levels",
-                ].map((chip) => (
-                  <div
-                    key={chip}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-center text-sm font-medium text-slate-700"
-                  >
-                    {chip}
-                  </div>
-                ))}
-              </div>
+              <ul className="mt-3 space-y-1.5 pl-5 text-sm text-slate-700">
+                <li>Bodyweight strength &amp; conditioning</li>
+                <li>Fun, challenging workouts</li>
+                <li>Open to all fitness levels</li>
+              </ul>
             </div>
 
             <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-slate-700">
