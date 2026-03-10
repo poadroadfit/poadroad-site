@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 const CLASS_DAYS = ["Monday", "Thursday", "Friday"];
@@ -18,6 +19,8 @@ export default function Page() {
   const [selectedDays, setSelectedDays] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedPackage, setSelectedPackage] = useState(null);
+  const [waiverAgreed, setWaiverAgreed] = useState(false);
+  const [waiverError, setWaiverError] = useState("");
 
   const toggleDay = (day) => {
     setSelectedDays((current) =>
@@ -28,6 +31,11 @@ export default function Page() {
   };
 
   const handleCheckout = async (type) => {
+    if (!waiverAgreed) {
+      setWaiverError("Please agree to the waiver before continuing.");
+      return;
+    }
+
     const safeQuantity = Number.isFinite(quantity)
       ? Math.min(Math.max(Math.floor(quantity), 1), 10)
       : 1;
@@ -252,6 +260,27 @@ export default function Page() {
                         <p className="mt-1 text-xs font-medium text-amber-700">
                           Select at least one day to checkout Drop-In.
                         </p>
+                      ) : null}
+                      <label className="mt-2.5 flex items-start gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={waiverAgreed}
+                          onChange={(e) => {
+                            setWaiverAgreed(e.target.checked);
+                            if (e.target.checked) setWaiverError("");
+                          }}
+                          className="mt-0.5 h-4 w-4 accent-sky-600"
+                        />
+                        <span>
+                          I have read and agree to the PoadRoad{" "}
+                          <Link href="/waiver" className="underline">
+                            liability waiver
+                          </Link>
+                          .
+                        </span>
+                      </label>
+                      {waiverError ? (
+                        <p className="mt-1 text-xs font-medium text-amber-700">{waiverError}</p>
                       ) : null}
                       <button
                         onClick={() => handleCheckout(selectedPackage)}
